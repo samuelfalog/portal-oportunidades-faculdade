@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Oportunidades - Faculdade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">🎓</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Portal de Oportunidades</h1>
+                        <p class="text-sm text-gray-600">Faculdade de Tecnologia</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <button onclick="showHome()" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Início</button>
+                    <button onclick="showStudentArea()" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Área do Aluno</button>
+                    <button onclick="showCompanyArea()" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Área da Empresa</button>
+                    <button onclick="showAdminArea()" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Coordenação</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Home Page -->
+        <div id="homePage" class="fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Conectando Talentos a Oportunidades</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Plataforma oficial da faculdade para estágios e empregos. Conectamos nossos alunos e ex-alunos às melhores empresas parceiras.</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2" id="totalJobs">24</div>
+                    <div class="text-gray-600">Vagas Ativas</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2" id="totalStudents">156</div>
+                    <div class="text-gray-600">Alunos Cadastrados</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-2" id="totalCompanies">18</div>
+                    <div class="text-gray-600">Empresas Parceiras</div>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">👨‍🎓</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Sou Aluno</h3>
+                        <p class="text-gray-600 mb-6">Encontre oportunidades de estágio e emprego adequadas ao seu perfil acadêmico.</p>
+                        <button onclick="showStudentArea()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">Acessar Área do Aluno</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🏢</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Sou Empresa</h3>
+                        <p class="text-gray-600 mb-6">Publique vagas e encontre os melhores talentos da nossa faculdade.</p>
+                        <button onclick="showCompanyArea()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">Acessar Área da Empresa</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Jobs -->
+            <div class="bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Vagas Recentes</h3>
+                <div id="recentJobs" class="space-y-4">
+                    <!-- Jobs will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Area -->
+        <div id="studentArea" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Área do Aluno</h2>
+                
+                <!-- Student Login/Register -->
+                <div id="studentAuth" class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Login -->
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Fazer Login</h3>
+                            <form onsubmit="studentLogin(event)">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">RA (Registro Acadêmico)</label>
+                                    <input type="text" id="loginRA" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite seu RA">
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">Senha</label>
+                                    <input type="password" id="loginPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite sua senha">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors">Entrar</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Register -->
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Primeiro Acesso</h3>
+                            <form onsubmit="studentRegister(event)">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">Nome Completo</label>
+                                    <input type="text" id="regName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Seu nome completo">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">RA</label>
+                                    <input type="text" id="regRA" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Seu RA">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">Curso</label>
+                                    <select id="regCourse" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Selecione seu curso</option>
+                                        <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
+                                        <option value="Engenharia de Software">Engenharia de Software</option>
+                                        <option value="Ciência da Computação">Ciência da Computação</option>
+                                        <option value="Sistemas de Informação">Sistemas de Informação</option>
+                                    </select>
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">Período</label>
+                                    <select id="regPeriod" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Selecione o período</option>
+                                        <option value="1º Semestre">1º Semestre</option>
+                                        <option value="2º Semestre">2º Semestre</option>
+                                        <option value="3º Semestre">3º Semestre</option>
+                                        <option value="4º Semestre">4º Semestre</option>
+                                        <option value="5º Semestre">5º Semestre</option>
+                                        <option value="6º Semestre">6º Semestre</option>
+                                        <option value="Formado">Formado</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition-colors">Cadastrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Dashboard -->
+                <div id="studentDashboard" class="hidden">
+                    <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Bem-vindo, <span id="studentName"></span>!</h3>
+                                <p class="text-gray-600"><span id="studentCourse"></span> - <span id="studentPeriod"></span></p>
+                            </div>
+                            <button onclick="studentLogout()" class="text-red-600 hover:text-red-700 font-medium">Sair</button>
+                        </div>
+                        
+                        <!-- Student Stats -->
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-blue-600" id="studentApplications">0</div>
+                                <div class="text-gray-600">Candidaturas</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-green-600" id="studentInterviews">0</div>
+                                <div class="text-gray-600">Entrevistas</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-purple-600" id="availableJobs">0</div>
+                                <div class="text-gray-600">Vagas Disponíveis</div>
+                            </div>
+                        </div>
+
+                        <!-- Job Applications -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Minhas Candidaturas</h4>
+                            <div id="studentApplicationsList" class="space-y-4">
+                                <div class="text-gray-500 text-center py-8">Você ainda não se candidatou a nenhuma vaga.</div>
+                            </div>
+                        </div>
+
+                        <!-- Available Jobs -->
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Vagas Disponíveis</h4>
+                            <div id="availableJobsList" class="space-y-4">
+                                <!-- Jobs will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Area -->
+        <div id="companyArea" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Área da Empresa</h2>
+                
+                <!-- Company Login/Register -->
+                <div id="companyAuth" class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Login -->
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Fazer Login</h3>
+                            <form onsubmit="companyLogin(event)">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">CNPJ</label>
+                                    <input type="text" id="companyLoginCNPJ" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Digite o CNPJ">
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">Senha</label>
+                                    <input type="password" id="companyLoginPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Digite sua senha">
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition-colors">Entrar</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Register -->
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Cadastro de Empresa</h3>
+                            <form onsubmit="companyRegister(event)">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">Nome da Empresa</label>
+                                    <input type="text" id="companyRegName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Nome da empresa">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">CNPJ</label>
+                                    <input type="text" id="companyRegCNPJ" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="CNPJ da empresa">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2">Email de Contato</label>
+                                    <input type="email" id="companyRegEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="email@empresa.com">
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-medium mb-2">Telefone</label>
+                                    <input type="tel" id="companyRegPhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="(11) 99999-9999">
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition-colors">Cadastrar Empresa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Dashboard -->
+                <div id="companyDashboard" class="hidden">
+                    <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">Painel da <span id="companyName"></span></h3>
+                                <p class="text-gray-600">CNPJ: <span id="companyCNPJ"></span></p>
+                            </div>
+                            <button onclick="companyLogout()" class="text-red-600 hover:text-red-700 font-medium">Sair</button>
+                        </div>
+                        
+                        <!-- Company Stats -->
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-green-600" id="companyJobs">0</div>
+                                <div class="text-gray-600">Vagas Publicadas</div>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-blue-600" id="companyApplications">0</div>
+                                <div class="text-gray-600">Candidaturas Recebidas</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-purple-600" id="companyInterviews">0</div>
+                                <div class="text-gray-600">Entrevistas Agendadas</div>
+                            </div>
+                        </div>
+
+                        <!-- Post New Job -->
+                        <div class="mb-8">
+                            <button onclick="toggleJobForm()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">+ Nova Vaga</button>
+                            
+                            <div id="jobForm" class="hidden mt-6 p-6 bg-gray-50 rounded-lg">
+                                <h4 class="text-lg font-bold text-gray-800 mb-4">Publicar Nova Vaga</h4>
+                                <form onsubmit="postJob(event)">
+                                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <label class="block text-gray-700 font-medium mb-2">Título da Vaga</label>
+                                            <input type="text" id="jobTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Ex: Desenvolvedor Frontend Jr.">
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-700 font-medium mb-2">Tipo</label>
+                                            <select id="jobType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                                <option value="Estágio">Estágio</option>
+                                                <option value="Emprego">Emprego</option>
+                                                <option value="Trainee">Trainee</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <label class="block text-gray-700 font-medium mb-2">Curso Preferencial</label>
+                                            <select id="jobCourse" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                                <option value="Todos">Todos os Cursos</option>
+                                                <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
+                                                <option value="Engenharia de Software">Engenharia de Software</option>
+                                                <option value="Ciência da Computação">Ciência da Computação</option>
+                                                <option value="Sistemas de Informação">Sistemas de Informação</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-700 font-medium mb-2">Salário (opcional)</label>
+                                            <input type="text" id="jobSalary" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Ex: R$ 2.000,00">
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 font-medium mb-2">Descrição da Vaga</label>
+                                        <textarea id="jobDescription" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Descreva as responsabilidades, requisitos e benefícios..."></textarea>
+                                    </div>
+                                    <div class="flex space-x-4">
+                                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">Publicar Vaga</button>
+                                        <button type="button" onclick="toggleJobForm()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Company Jobs -->
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Minhas Vagas</h4>
+                            <div id="companyJobsList" class="space-y-4">
+                                <div class="text-gray-500 text-center py-8">Nenhuma vaga publicada ainda.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Area -->
+        <div id="adminArea" class="hidden fade-in">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Coordenação de Estágios</h2>
+                
+                <!-- Admin Login -->
+                <div id="adminAuth" class="bg-white rounded-xl p-8 shadow-lg mb-8 max-w-md mx-auto">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Acesso da Coordenação</h3>
+                    <form onsubmit="adminLogin(event)">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Usuário</label>
+                            <input type="text" id="adminUser" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Digite o usuário">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-medium mb-2">Senha</label>
+                            <input type="password" id="adminPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Digite a senha">
+                        </div>
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium transition-colors">Entrar</button>
+                    </form>
+                    <div class="mt-4 text-sm text-gray-600 text-center">
+                        <p>Demo: usuário "admin" / senha "123456"</p>
+                    </div>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="adminDashboard" class="hidden">
+                    <div class="bg-white rounded-xl p-8 shadow-lg mb-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-gray-800">Painel Administrativo</h3>
+                            <button onclick="adminLogout()" class="text-red-600 hover:text-red-700 font-medium">Sair</button>
+                        </div>
+                        
+                        <!-- Admin Stats -->
+                        <div class="grid md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-blue-600" id="adminTotalJobs">0</div>
+                                <div class="text-gray-600">Total de Vagas</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-green-600" id="adminTotalStudents">0</div>
+                                <div class="text-gray-600">Alunos Cadastrados</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-purple-600" id="adminTotalCompanies">0</div>
+                                <div class="text-gray-600">Empresas Parceiras</div>
+                            </div>
+                            <div class="bg-yellow-50 rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-yellow-600" id="adminTotalApplications">0</div>
+                                <div class="text-gray-600">Candidaturas</div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Tabs -->
+                        <div class="mb-6">
+                            <div class="flex space-x-4 border-b">
+                                <button onclick="showAdminTab('jobs')" id="adminJobsTab" class="px-4 py-2 font-medium text-purple-600 border-b-2 border-purple-600">Vagas</button>
+                                <button onclick="showAdminTab('students')" id="adminStudentsTab" class="px-4 py-2 font-medium text-gray-500 hover:text-purple-600">Alunos</button>
+                                <button onclick="showAdminTab('companies')" id="adminCompaniesTab" class="px-4 py-2 font-medium text-gray-500 hover:text-purple-600">Empresas</button>
+                                <button onclick="showAdminTab('reports')" id="adminReportsTab" class="px-4 py-2 font-medium text-gray-500 hover:text-purple-600">Relatórios</button>
+                            </div>
+                        </div>
+
+                        <!-- Admin Content -->
+                        <div id="adminJobsContent" class="admin-tab-content">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Gerenciar Vagas</h4>
+                            <div id="adminJobsList" class="space-y-4">
+                                <!-- Jobs will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div id="adminStudentsContent" class="admin-tab-content hidden">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Alunos Cadastrados</h4>
+                            <div id="adminStudentsList" class="space-y-4">
+                                <!-- Students will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div id="adminCompaniesContent" class="admin-tab-content hidden">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Empresas Parceiras</h4>
+                            <div id="adminCompaniesList" class="space-y-4">
+                                <!-- Companies will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div id="adminReportsContent" class="admin-tab-content hidden">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">Relatórios</h4>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="bg-gray-50 rounded-lg p-6">
+                                    <h5 class="font-bold text-gray-800 mb-4">Alunos por Curso</h5>
+                                    <div id="studentsByCourse" class="space-y-2">
+                                        <!-- Report data will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-6">
+                                    <h5 class="font-bold text-gray-800 mb-4">Vagas por Tipo</h5>
+                                    <div id="jobsByType" class="space-y-2">
+                                        <!-- Report data will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Data Storage
+        let students = JSON.parse(localStorage.getItem('students') || '[]');
+        let companies = JSON.parse(localStorage.getItem('companies') || '[]');
+        let jobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+        let applications = JSON.parse(localStorage.getItem('applications') || '[]');
+        let currentUser = null;
+        let userType = null;
+
+        // Initialize with sample data if empty
+        if (jobs.length === 0) {
+            jobs = [
+                {
+                    id: 1,
+                    title: "Desenvolvedor Frontend Jr.",
+                    company: "TechCorp",
+                    type: "Estágio",
+                    course: "Análise e Desenvolvimento de Sistemas",
+                    salary: "R$ 1.500,00",
+                    description: "Desenvolvimento de interfaces web com React e JavaScript. Oportunidade para aprender e crescer em uma equipe dinâmica.",
+                    date: new Date().toLocaleDateString(),
+                    companyId: "demo"
+                },
+                {
+                    id: 2,
+                    title: "Analista de Sistemas",
+                    company: "DataSoft",
+                    type: "Emprego",
+                    course: "Sistemas de Informação",
+                    salary: "R$ 3.500,00",
+                    description: "Análise e desenvolvimento de sistemas corporativos. Experiência com banco de dados e metodologias ágeis.",
+                    date: new Date().toLocaleDateString(),
+                    companyId: "demo"
+                }
+            ];
+            localStorage.setItem('jobs', JSON.stringify(jobs));
+        }
+
+        // Navigation Functions
+        function showHome() {
+            hideAllPages();
+            document.getElementById('homePage').classList.remove('hidden');
+            updateHomeStats();
+            displayRecentJobs();
+        }
+
+        function showStudentArea() {
+            hideAllPages();
+            document.getElementById('studentArea').classList.remove('hidden');
+            if (userType === 'student' && currentUser) {
+                showStudentDashboard();
+            }
+        }
+
+        function showCompanyArea() {
+            hideAllPages();
+            document.getElementById('companyArea').classList.remove('hidden');
+            if (userType === 'company' && currentUser) {
+                showCompanyDashboard();
+            }
+        }
+
+        function showAdminArea() {
+            hideAllPages();
+            document.getElementById('adminArea').classList.remove('hidden');
+            if (userType === 'admin' && currentUser) {
+                showAdminDashboard();
+            }
+        }
+
+        function hideAllPages() {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('studentArea').classList.add('hidden');
+            document.getElementById('companyArea').classList.add('hidden');
+            document.getElementById('adminArea').classList.add('hidden');
+        }
+
+        // Student Functions
+        function studentLogin(event) {
+            event.preventDefault();
+            const ra = document.getElementById('loginRA').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const student = students.find(s => s.ra === ra && s.password === password);
+            if (student) {
+                currentUser = student;
+                userType = 'student';
+                showStudentDashboard();
+                alert('Login realizado com sucesso!');
+            } else {
+                alert('RA ou senha incorretos!');
+            }
+        }
+
+        function studentRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('regName').value;
+            const ra = document.getElementById('regRA').value;
+            const course = document.getElementById('regCourse').value;
+            const period = document.getElementById('regPeriod').value;
+            
+            if (!name || !ra || !course || !period) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            
+            if (students.find(s => s.ra === ra)) {
+                alert('RA já cadastrado!');
+                return;
+            }
+            
+            const student = {
+                id: Date.now(),
+                name,
+                ra,
+                course,
+                period,
+                password: '123456', // Default password
+                applications: []
+            };
+            
+            students.push(student);
+            localStorage.setItem('students', JSON.stringify(students));
+            
+            currentUser = student;
+            userType = 'student';
+            showStudentDashboard();
+            alert('Cadastro realizado com sucesso! Sua senha padrão é: 123456');
+        }
+
+        function showStudentDashboard() {
+            document.getElementById('studentAuth').classList.add('hidden');
+            document.getElementById('studentDashboard').classList.remove('hidden');
+            
+            document.getElementById('studentName').textContent = currentUser.name;
+            document.getElementById('studentCourse').textContent = currentUser.course;
+            document.getElementById('studentPeriod').textContent = currentUser.period;
+            
+            updateStudentStats();
+            displayStudentApplications();
+            displayAvailableJobs();
+        }
+
+        function updateStudentStats() {
+            const userApplications = applications.filter(app => app.studentId === currentUser.id);
+            const interviews = userApplications.filter(app => app.status === 'Entrevista');
+            
+            document.getElementById('studentApplications').textContent = userApplications.length;
+            document.getElementById('studentInterviews').textContent = interviews.length;
+            document.getElementById('availableJobs').textContent = jobs.length;
+        }
+
+        function displayStudentApplications() {
+            const userApplications = applications.filter(app => app.studentId === currentUser.id);
+            const container = document.getElementById('studentApplicationsList');
+            
+            if (userApplications.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Você ainda não se candidatou a nenhuma vaga.</div>';
+                return;
+            }
+            
+            container.innerHTML = userApplications.map(app => {
+                const job = jobs.find(j => j.id === app.jobId);
+                const statusColor = app.status === 'Pendente' ? 'yellow' : app.status === 'Entrevista' ? 'blue' : 'green';
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="font-bold text-gray-800">${job?.title || 'Vaga não encontrada'}</h5>
+                                <p class="text-gray-600">${job?.company || ''} - ${job?.type || ''}</p>
+                                <p class="text-sm text-gray-500">Candidatura enviada em: ${app.date}</p>
+                            </div>
+                            <span class="px-3 py-1 bg-${statusColor}-100 text-${statusColor}-800 rounded-full text-sm font-medium">${app.status}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayAvailableJobs() {
+            const container = document.getElementById('availableJobsList');
+            
+            container.innerHTML = jobs.map(job => `
+                <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h5 class="text-lg font-bold text-gray-800">${job.title}</h5>
+                            <p class="text-gray-600">${job.company} - ${job.type}</p>
+                            <p class="text-sm text-gray-500">Curso: ${job.course} | Salário: ${job.salary}</p>
+                        </div>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">${job.type}</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">${job.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Publicada em: ${job.date}</span>
+                        <button onclick="applyToJob(${job.id})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">Candidatar-se</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyToJob(jobId) {
+            if (!currentUser || userType !== 'student') {
+                alert('Você precisa estar logado como aluno para se candidatar!');
+                return;
+            }
+            
+            const existingApplication = applications.find(app => 
+                app.studentId === currentUser.id && app.jobId === jobId
+            );
+            
+            if (existingApplication) {
+                alert('Você já se candidatou a esta vaga!');
+                return;
+            }
+            
+            const application = {
+                id: Date.now(),
+                studentId: currentUser.id,
+                jobId: jobId,
+                status: 'Pendente',
+                date: new Date().toLocaleDateString()
+            };
+            
+            applications.push(application);
+            localStorage.setItem('applications', JSON.stringify(applications));
+            
+            alert('Candidatura enviada com sucesso!');
+            updateStudentStats();
+            displayStudentApplications();
+        }
+
+        function studentLogout() {
+            currentUser = null;
+            userType = null;
+            document.getElementById('studentAuth').classList.remove('hidden');
+            document.getElementById('studentDashboard').classList.add('hidden');
+            
+            // Clear forms
+            document.getElementById('loginRA').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        // Company Functions
+        function companyLogin(event) {
+            event.preventDefault();
+            const cnpj = document.getElementById('companyLoginCNPJ').value;
+            const password = document.getElementById('companyLoginPassword').value;
+            
+            const company = companies.find(c => c.cnpj === cnpj && c.password === password);
+            if (company) {
+                currentUser = company;
+                userType = 'company';
+                showCompanyDashboard();
+                alert('Login realizado com sucesso!');
+            } else {
+                alert('CNPJ ou senha incorretos!');
+            }
+        }
+
+        function companyRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('companyRegName').value;
+            const cnpj = document.getElementById('companyRegCNPJ').value;
+            const email = document.getElementById('companyRegEmail').value;
+            const phone = document.getElementById('companyRegPhone').value;
+            
+            if (!name || !cnpj || !email || !phone) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            
+            if (companies.find(c => c.cnpj === cnpj)) {
+                alert('CNPJ já cadastrado!');
+                return;
+            }
+            
+            const company = {
+                id: Date.now(),
+                name,
+                cnpj,
+                email,
+                phone,
+                password: '123456', // Default password
+                approved: true // Auto-approve for demo
+            };
+            
+            companies.push(company);
+            localStorage.setItem('companies', JSON.stringify(companies));
+            
+            currentUser = company;
+            userType = 'company';
+            showCompanyDashboard();
+            alert('Cadastro realizado com sucesso! Sua senha padrão é: 123456');
+        }
+
+        function showCompanyDashboard() {
+            document.getElementById('companyAuth').classList.add('hidden');
+            document.getElementById('companyDashboard').classList.remove('hidden');
+            
+            document.getElementById('companyName').textContent = currentUser.name;
+            document.getElementById('companyCNPJ').textContent = currentUser.cnpj;
+            
+            updateCompanyStats();
+            displayCompanyJobs();
+        }
+
+        function updateCompanyStats() {
+            const companyJobs = jobs.filter(job => job.companyId === currentUser.id);
+            const companyApplications = applications.filter(app => 
+                companyJobs.some(job => job.id === app.jobId)
+            );
+            const interviews = companyApplications.filter(app => app.status === 'Entrevista');
+            
+            document.getElementById('companyJobs').textContent = companyJobs.length;
+            document.getElementById('companyApplications').textContent = companyApplications.length;
+            document.getElementById('companyInterviews').textContent = interviews.length;
+        }
+
+        function toggleJobForm() {
+            const form = document.getElementById('jobForm');
+            form.classList.toggle('hidden');
+        }
+
+        function postJob(event) {
+            event.preventDefault();
+            const title = document.getElementById('jobTitle').value;
+            const type = document.getElementById('jobType').value;
+            const course = document.getElementById('jobCourse').value;
+            const salary = document.getElementById('jobSalary').value;
+            const description = document.getElementById('jobDescription').value;
+            
+            if (!title || !description) {
+                alert('Por favor, preencha pelo menos o título e a descrição!');
+                return;
+            }
+            
+            const job = {
+                id: Date.now(),
+                title,
+                company: currentUser.name,
+                type,
+                course,
+                salary: salary || 'A combinar',
+                description,
+                date: new Date().toLocaleDateString(),
+                companyId: currentUser.id
+            };
+            
+            jobs.push(job);
+            localStorage.setItem('jobs', JSON.stringify(jobs));
+            
+            // Clear form
+            document.getElementById('jobTitle').value = '';
+            document.getElementById('jobDescription').value = '';
+            document.getElementById('jobSalary').value = '';
+            
+            toggleJobForm();
+            updateCompanyStats();
+            displayCompanyJobs();
+            alert('Vaga publicada com sucesso!');
+        }
+
+        function displayCompanyJobs() {
+            const companyJobs = jobs.filter(job => job.companyId === currentUser.id);
+            const container = document.getElementById('companyJobsList');
+            
+            if (companyJobs.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Nenhuma vaga publicada ainda.</div>';
+                return;
+            }
+            
+            container.innerHTML = companyJobs.map(job => {
+                const jobApplications = applications.filter(app => app.jobId === job.id);
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h5 class="text-lg font-bold text-gray-800">${job.title}</h5>
+                                <p class="text-gray-600">${job.type} - ${job.course}</p>
+                                <p class="text-sm text-gray-500">Salário: ${job.salary}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">Publicada em: ${job.date}</div>
+                                <div class="text-sm font-medium text-blue-600">${jobApplications.length} candidatos</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">${job.description}</p>
+                        <button onclick="viewJobApplications(${job.id})" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">Ver Candidatos</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewJobApplications(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            const jobApplications = applications.filter(app => app.jobId === jobId);
+            
+            if (jobApplications.length === 0) {
+                alert('Nenhum candidato para esta vaga ainda.');
+                return;
+            }
+            
+            let candidatesInfo = `Candidatos para: ${job.title}\n\n`;
+            
+            jobApplications.forEach(app => {
+                const student = students.find(s => s.id === app.studentId);
+                if (student) {
+                    candidatesInfo += `• ${student.name} (${student.course} - ${student.period})\n`;
+                    candidatesInfo += `  Status: ${app.status} | Data: ${app.date}\n\n`;
+                }
+            });
+            
+            alert(candidatesInfo);
+        }
+
+        function companyLogout() {
+            currentUser = null;
+            userType = null;
+            document.getElementById('companyAuth').classList.remove('hidden');
+            document.getElementById('companyDashboard').classList.add('hidden');
+            
+            // Clear forms
+            document.getElementById('companyLoginCNPJ').value = '';
+            document.getElementById('companyLoginPassword').value = '';
+        }
+
+        // Admin Functions
+        function adminLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('adminUser').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (user === 'admin' && password === '123456') {
+                currentUser = { name: 'Administrador' };
+                userType = 'admin';
+                showAdminDashboard();
+                alert('Login administrativo realizado com sucesso!');
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('adminAuth').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            
+            updateAdminStats();
+            showAdminTab('jobs');
+        }
+
+        function updateAdminStats() {
+            document.getElementById('adminTotalJobs').textContent = jobs.length;
+            document.getElementById('adminTotalStudents').textContent = students.length;
+            document.getElementById('adminTotalCompanies').textContent = companies.length;
+            document.getElementById('adminTotalApplications').textContent = applications.length;
+        }
+
+        function showAdminTab(tab) {
+            // Hide all tab contents
+            document.querySelectorAll('.admin-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id$="Tab"]').forEach(tabBtn => {
+                tabBtn.className = 'px-4 py-2 font-medium text-gray-500 hover:text-purple-600';
+            });
+            
+            // Show selected tab content
+            document.getElementById(`admin${tab.charAt(0).toUpperCase() + tab.slice(1)}Content`).classList.remove('hidden');
+            
+            // Add active class to selected tab
+            document.getElementById(`admin${tab.charAt(0).toUpperCase() + tab.slice(1)}Tab`).className = 'px-4 py-2 font-medium text-purple-600 border-b-2 border-purple-600';
+            
+            // Load tab content
+            switch(tab) {
+                case 'jobs':
+                    displayAdminJobs();
+                    break;
+                case 'students':
+                    displayAdminStudents();
+                    break;
+                case 'companies':
+                    displayAdminCompanies();
+                    break;
+                case 'reports':
+                    displayAdminReports();
+                    break;
+            }
+        }
+
+        function displayAdminJobs() {
+            const container = document.getElementById('adminJobsList');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Nenhuma vaga cadastrada.</div>';
+                return;
+            }
+            
+            container.innerHTML = jobs.map(job => {
+                const jobApplications = applications.filter(app => app.jobId === job.id);
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="font-bold text-gray-800">${job.title}</h5>
+                                <p class="text-gray-600">${job.company} - ${job.type}</p>
+                                <p class="text-sm text-gray-500">Curso: ${job.course} | Candidatos: ${jobApplications.length}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">${job.date}</div>
+                                <button onclick="removeJob(${job.id})" class="text-red-600 hover:text-red-700 text-sm font-medium mt-1">Remover</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayAdminStudents() {
+            const container = document.getElementById('adminStudentsList');
+            
+            if (students.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Nenhum aluno cadastrado.</div>';
+                return;
+            }
+            
+            container.innerHTML = students.map(student => {
+                const studentApplications = applications.filter(app => app.studentId === student.id);
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="font-bold text-gray-800">${student.name}</h5>
+                                <p class="text-gray-600">RA: ${student.ra}</p>
+                                <p class="text-sm text-gray-500">${student.course} - ${student.period}</p>
+                                <p class="text-sm text-gray-500">Candidaturas: ${studentApplications.length}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayAdminCompanies() {
+            const container = document.getElementById('adminCompaniesList');
+            
+            if (companies.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Nenhuma empresa cadastrada.</div>';
+                return;
+            }
+            
+            container.innerHTML = companies.map(company => {
+                const companyJobs = jobs.filter(job => job.companyId === company.id);
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h5 class="font-bold text-gray-800">${company.name}</h5>
+                                <p class="text-gray-600">CNPJ: ${company.cnpj}</p>
+                                <p class="text-sm text-gray-500">Email: ${company.email}</p>
+                                <p class="text-sm text-gray-500">Vagas publicadas: ${companyJobs.length}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayAdminReports() {
+            // Students by course
+            const courseCount = {};
+            students.forEach(student => {
+                courseCount[student.course] = (courseCount[student.course] || 0) + 1;
+            });
+            
+            const studentsByCourseContainer = document.getElementById('studentsByCourse');
+            studentsByCourseContainer.innerHTML = Object.entries(courseCount).map(([course, count]) => `
+                <div class="flex justify-between">
+                    <span class="text-gray-700">${course}</span>
+                    <span class="font-medium">${count}</span>
+                </div>
+            `).join('');
+            
+            // Jobs by type
+            const typeCount = {};
+            jobs.forEach(job => {
+                typeCount[job.type] = (typeCount[job.type] || 0) + 1;
+            });
+            
+            const jobsByTypeContainer = document.getElementById('jobsByType');
+            jobsByTypeContainer.innerHTML = Object.entries(typeCount).map(([type, count]) => `
+                <div class="flex justify-between">
+                    <span class="text-gray-700">${type}</span>
+                    <span class="font-medium">${count}</span>
+                </div>
+            `).join('');
+        }
+
+        function removeJob(jobId) {
+            if (confirm('Tem certeza que deseja remover esta vaga?')) {
+                jobs = jobs.filter(job => job.id !== jobId);
+                applications = applications.filter(app => app.jobId !== jobId);
+                
+                localStorage.setItem('jobs', JSON.stringify(jobs));
+                localStorage.setItem('applications', JSON.stringify(applications));
+                
+                updateAdminStats();
+                displayAdminJobs();
+                alert('Vaga removida com sucesso!');
+            }
+        }
+
+        function adminLogout() {
+            currentUser = null;
+            userType = null;
+            document.getElementById('adminAuth').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            
+            // Clear forms
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        // Home Page Functions
+        function updateHomeStats() {
+            document.getElementById('totalJobs').textContent = jobs.length;
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('totalCompanies').textContent = companies.length;
+        }
+
+        function displayRecentJobs() {
+            const container = document.getElementById('recentJobs');
+            const recentJobs = jobs.slice(-3).reverse(); // Last 3 jobs
+            
+            if (recentJobs.length === 0) {
+                container.innerHTML = '<div class="text-gray-500 text-center py-8">Nenhuma vaga disponível no momento.</div>';
+                return;
+            }
+            
+            container.innerHTML = recentJobs.map(job => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h5 class="font-bold text-gray-800">${job.title}</h5>
+                            <p class="text-gray-600">${job.company} - ${job.type}</p>
+                            <p class="text-sm text-gray-500">Curso: ${job.course} | Salário: ${job.salary}</p>
+                        </div>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">${job.type}</span>
+                    </div>
+                    <p class="text-gray-700 mt-2 text-sm">${job.description.substring(0, 100)}...</p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize the application
+        showHome();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9735c32e50d95221',t:'MTc1NTkwMTI3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
